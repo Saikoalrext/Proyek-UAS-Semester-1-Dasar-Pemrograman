@@ -5879,7 +5879,7 @@ int main(){
 
             player.talismanAttributes(player.inventory, player.talisman);
 
-            player.checkStats();
+            cout<< "\n";
 
             storyIntro();
 
@@ -5937,7 +5937,7 @@ int main(){
     }
     cout<< "\n";
 
-    cout<< "\n";
+    player.checkStats();
 
     int playerInput;
     do
