@@ -142,7 +142,7 @@ class Player{
     Skill createPlayerSkill(){
         Skill ps;
         ps.skill= stats.STR* 2.0f;
-        ps.skill1= stats.critDMG* 2.0f;
+        ps.skill1= stats.critDMG* 1.2f;
         ps.skill2= stats.critChance* 2;
         ps.skillMPCost= 20;
         ps.skill1MPCost= 30;
@@ -593,7 +593,7 @@ class Bosses{
         b1.baseMaxMP= 200;
         b1.maxMP= b1.baseMaxMP;
         b1.MP= b1.maxMP;
-        b1.baseSTR= 200;
+        b1.baseSTR= 150;
         b1.STR= b1.baseSTR;
         b1.baseDEF= 100;
         b1.DEF= b1.baseDEF;
@@ -662,7 +662,7 @@ class Bosses{
         b3.baseMaxHP= 700;
         b3.maxHP= b3.baseMaxHP;
         b3.HP= b3.maxHP;
-        b3.baseMaxMP= 140;
+        b3.baseMaxMP= 130;
         b3.maxMP= b3.baseMaxMP;
         b3.MP= b3.maxMP;
         b3.baseSTR= 70;
@@ -689,7 +689,7 @@ class Bosses{
         b3.baseMaxMP= 100;
         b3.maxMP= b3.baseMaxMP;
         b3.MP= b3.maxMP;
-        b3.baseSTR= 180;
+        b3.baseSTR= 140;
         b3.STR= b3.baseSTR;
         b3.baseDEF= 90;
         b3.DEF= b3.baseDEF;
@@ -857,8 +857,8 @@ void levelUp(){
         player.stats.baseMaxMP+= 10;
         player.stats.maxHP= player.stats.baseMaxHP;
         player.stats.maxMP= player.stats.baseMaxMP;
-        player.stats.baseSTR+= 5;
-        player.stats.baseDEF+= 5;
+        player.stats.baseSTR+= 2;
+        player.stats.baseDEF+= 2;
         player.stats.baseCritDMG+= 0.05f;
         player.stats.baseCritChance+= 2;
         player.stats.HP= player.stats.maxHP;
@@ -874,9 +874,9 @@ void levelUp(){
         waitms();
         cout<< "MP +10\n";
         waitms();
-        cout<< "STR +5\n";
+        cout<< "STR +2\n";
         waitms();
-        cout<< "DEF +5\n";
+        cout<< "DEF +2\n";
         waitms();
         cout<< "Crit Damage +0.2\n";
         waitms();
@@ -1056,7 +1056,9 @@ void shop(){
             }
         } else if (shopInput== 3)
         {
-            cout<< "******** WEAPONS ********\n";
+            cout<< "******** WEAPONS ********\n\n";
+            cout<< "Gold: "<< player.stats.gold<< "\n\n";
+
             for (size_t i = 1; i < w.weaponList.size(); i++)
             {
                 int menuNumber= i;
@@ -1113,7 +1115,9 @@ void shop(){
             }
         } else if (shopInput== 4)
         {
-            cout<< "******** ARMOR ********\n";
+            cout<< "******** ARMOR ********\n\n";
+            cout<< "Gold: "<< player.stats.gold<< "\n\n";
+
             for (size_t i = 1; i < a.armorList.size(); i++)
             {
                 int menuNumber1= i;
@@ -1171,7 +1175,8 @@ void shop(){
             }
         } else if (shopInput== 5)
         {
-            cout<< "******** TALISMANS ********\n";
+            cout<< "******** TALISMANS ********\n\n";
+            cout<< "Gold: "<< player.stats.gold<< "\n\n";
             
             for (size_t j = 1; j < t.talismanList.size(); j++)
             {
@@ -4644,7 +4649,7 @@ void travel(){
                 wait();
                 cout<< ".";
                 wait();
-                cout<< ".";
+                cout<< ".\n\n";
                 wait();
 
                 if (rand()% 100< 30)
@@ -4670,6 +4675,7 @@ void travel(){
                 {
                     int roll= max(1, rand()% 31);
                     cout<< "You've received "<< roll<< " amount of gold!\n\n";
+                    player.stats.gold+= roll;
                     wait();
                 }
             } else if (inFarmInput== 2)
@@ -4765,30 +4771,61 @@ void travel(){
                     }
                     cout<< "\n\n";
 
-                    if (rand()%100< 30)
+                    int roll= rand()%100;
+
+                    if (roll< 30)
                     {
                         if (rand()%2== 1)
                         {
                             battleThief();
                             if (player.stats.HP<= 0) return;
+                            if (enemies.stats.HP> 0)
+                            {
+                                cout<< "You abandoned the shop owner!\n\n";
+                                wait();
+                                player.stats.trust-= 10;
+                                cout<< "Trust -10\n\n";
+                            }
+                            if (enemies.stats.HP<= 0)
+                            {
+                                cout<< "You've successfully guarded the shop for an hour!\n\n";
+                                wait();
+
+                                player.stats.XP+= 20;
+                                cout<< "XP +20\n\n";
+                                wait();
+                            }
                         } else{
                             battleBandit();
                             if (player.stats.HP<= 0) return;
+                            if (enemies.stats.HP> 0)
+                            {
+                                cout<< "You abandoned the shop owner!\n\n";
+                                wait();
+                                player.stats.trust-= 10;
+                                cout<< "Trust -10\n\n";
+                            }
                         }
                     }
                     
                     if (player.stats.HP<= 0) return;
-                    cout<< "You've successfully guarded the shop for an hour!\n\n";
-                    wait();
 
-                    player.stats.XP+= 20;
-                    cout<< "XP +20\n\n";
-                    wait();
+                    if (roll>= 30)
+                    {
+                        cout<< "You've successfully guarded the shop for an hour!\n\n";
+                        wait();
+
+                        player.stats.XP+= 20;
+                        cout<< "XP +20\n\n";
+                        wait();
+                    }
+                                
                     if (rand()% 2== 1)
                     {
                         int roll= max(1, rand()% 31);
                         cout<< "You've received "<< roll<< " amount of gold from the shop owner in return!\n\n";
                         wait();
+                        player.stats.gold+= roll;
                     }
                 } else{
                     return;
@@ -5935,7 +5972,8 @@ int main(){
         cout<< ".";
         wait();
     }
-    cout<< "\n";
+    cout<< "\n\n";
+    wait();
 
     player.checkStats();
 
@@ -5982,21 +6020,18 @@ int main(){
                 saveSlot = -1;
             }
             cout << "\n";
-            
-            if (saveSlot == 1) {
-                listSaveSlots();
-                cout << "Select slot (1-3): ";
-                if (!(cin >> saveSlot)) {
-                    cinClear();
-                    saveSlot = -1;
-                }
-                cout << "\n";
-                if (saveSlot >= 1 && saveSlot <= 3) {
-                    saveGame(saveSlot);
-                } else {
-                    cout << "Invalid selection!\n\n";
-                    wait(2);
-                }
+            listSaveSlots();
+            cout << "Select slot (1-3): ";
+            if (!(cin >> saveSlot)) {
+                cinClear();
+                saveSlot = -1;
+            }
+            cout << "\n";
+            if (saveSlot >= 1 && saveSlot <= 3) {
+                saveGame(saveSlot);
+            } else {
+                cout << "Invalid selection!\n\n";
+                wait(2);
             }
             break;
         case 6:
