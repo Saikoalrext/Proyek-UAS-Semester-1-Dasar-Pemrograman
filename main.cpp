@@ -141,7 +141,7 @@ class Player{
 
     Skill createPlayerSkill(){
         Skill ps;
-        ps.skill= stats.STR* 2.0f;
+        ps.skill= stats.STR* 1.5f;
         ps.skill1= stats.critDMG* 1.2f;
         ps.skill2= stats.critChance* 2;
         ps.skillMPCost= 20;
@@ -340,15 +340,15 @@ class Player{
             }
     };
 
-    applyTalisman(i.talisman);
-    applyTalisman(i.talisman1);
+        applyTalisman(i.talisman);
+        applyTalisman(i.talisman1);
 
-    stats.HP = min(stats.HP, stats.maxHP);
-    stats.MP = min(stats.MP, stats.maxMP);
+        stats.HP = min(stats.HP, stats.maxHP);
+        stats.MP = min(stats.MP, stats.maxMP);
 
-    skill.skill = stats.STR * 2;
-    skill.skill1 = stats.critDMG * 2;
-}
+        skill.skill = stats.STR * 2;
+        skill.skill1 = stats.critDMG * 2;
+    }
 };
 
 class Enemies{
@@ -870,9 +870,9 @@ void levelUp(){
 
         cout<< "LEVEL UP!\n\n";
         waitms();
-        cout<< "HP +10\n";
+        cout<< "Max HP +10\n";
         waitms();
-        cout<< "MP +10\n";
+        cout<< "Max MP +10\n";
         waitms();
         cout<< "STR +2\n";
         waitms();
@@ -890,7 +890,7 @@ void levelUp(){
 void scaleEnemyByLevel(int playerLevel){
     if (playerLevel<= 1) return;
 
-    const float STAT_SCALING_PER_LEVEL= 0.2f;
+    const float STAT_SCALING_PER_LEVEL= 0.12f;
     const float REWARD_SCALING_PER_LEVEL= 0.1f;
 
     float statMultiplier= 1.0f+ (playerLevel- 1)* STAT_SCALING_PER_LEVEL;
@@ -974,6 +974,14 @@ void shop(){
     Player::Weapon w= player.createWeapon();
     Player::Armor a= player.createArmor();
     Player::Talisman t= player.createTalisman();
+
+    auto discount= [&](int basePrice) -> int {
+        if (player.stats.trust>= 100)
+        {
+            return basePrice/ 2;
+        }
+        return basePrice;
+    };
 
     int shopInput;
     int confirmHealth;
@@ -1446,9 +1454,9 @@ void battle(){
             } else if (battleInput1== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>>skillInput1))
                 {
@@ -1795,9 +1803,9 @@ void wildernessBattle(){
             } else if (battleInput1== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>>skillInput1))
                 {
@@ -2282,9 +2290,9 @@ void bossBattleDragon(){
             else if (battleInput== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>> skillInput))
                 {
@@ -2675,9 +2683,9 @@ void bossBattleKingGrayhaven(){
             else if (battleInput== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>> skillInput))
                 {
@@ -3066,9 +3074,9 @@ void bossBattleKingStormwich(){
             else if (battleInput== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>> skillInput))
                 {
@@ -3497,9 +3505,9 @@ void bossBattleKingHillsgate(){
             else if (battleInput== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>> skillInput))
                 {
@@ -3899,9 +3907,9 @@ void bossBattleKingCelestial(){
             else if (battleInput== 2)
             {
                 cout<< "Mana: "<< player.stats.MP<< "\n";
-                cout<< "Choose skill:\n1. Brute Strike: STR* 2.   Mana required: "<< player.skill.skillMPCost<< ".\n";
-                cout<< "2. Focus Strike: Crit Damage* 2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
-                cout<< "3. Enchanced Perception: Crit Chance* 2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
+                cout<< "Choose skill:\n1. Brute Strike: STR *1.5.   Mana required: "<< player.skill.skillMPCost<< ".\n";
+                cout<< "2. Focus Strike: Crit Damage *1.2.   Mana required: "<< player.skill.skill1MPCost<< ".\n";
+                cout<< "3. Enchanced Perception: Crit Chance *2.   Mana required: "<< player.skill.skill2MPCost<< ".\n0. Cancel\nChoice: ";
                 
                 if (!(cin>> skillInput))
                 {
@@ -4351,7 +4359,7 @@ void travel(){
 
         if (currentLocation== "Wilderness") inNation= false;
 
-        if (inNation== true) cout<< "6. Nation Map\n";
+        if (inNation== true) cout<< "6. Nation Coordinates\n";
         
         if (inFarm== true) cout<< "7. Act\n";
 
@@ -4444,7 +4452,7 @@ void travel(){
             cout<< "* Celestial         *                   *\n";
             cout<< "*(-2200, -1200)     *                   *\n";
             cout<< "*****************************************\n\n";
-            cout<< "Each nation are splitted into 4 areas!\n\n";
+            cout<< "Each nation are splitted into 4 different area!\n\n";
             wait(5);
         } 
         
@@ -4593,8 +4601,8 @@ void travel(){
                 for (size_t i = 0; i < nAreaGrayhaven.name.size(); i++)
                 {
                     cout<< nAreaGrayhaven.name[i]<< ":\n";
-                    cout<< "   x: "<< nAreaGrayhaven.positionx[i]<< "-"<< nAreaGrayhaven.positionx1[i]<< "\n";
-                    cout<< "   y: "<< nAreaGrayhaven.positiony[i]<< "-"<< nAreaGrayhaven.positiony1[i]<< "\n\n";
+                    cout<< "   x: "<< nAreaGrayhaven.positionx[i]<< " to "<< nAreaGrayhaven.positionx1[i]<< "\n";
+                    cout<< "   y: "<< nAreaGrayhaven.positiony[i]<< " to "<< nAreaGrayhaven.positiony1[i]<< "\n\n";
                     wait();
                 }
             } else if (currentLocation== "Stormwich")
@@ -4602,8 +4610,8 @@ void travel(){
                 for (size_t i = 0; i < nAreaStormwich.name.size(); i++)
                 {
                     cout<< nAreaStormwich.name[i]<< ":\n";
-                    cout<< "   x: "<< nAreaStormwich.positionx[i]<< "-"<< nAreaStormwich.positionx1[i]<< "\n";
-                    cout<< "   y: "<< nAreaStormwich.positiony[i]<< "-"<< nAreaStormwich.positiony1[i]<< "\n\n";
+                    cout<< "   x: "<< nAreaStormwich.positionx[i]<< " to "<< nAreaStormwich.positionx1[i]<< "\n";
+                    cout<< "   y: "<< nAreaStormwich.positiony[i]<< " to "<< nAreaStormwich.positiony1[i]<< "\n\n";
                     wait();
                 }
             } else if (currentLocation== "Hillsgate")
@@ -4611,8 +4619,8 @@ void travel(){
                 for (size_t i = 0; i < nAreaHillsgate.name.size(); i++)
                 {
                     cout<< nAreaHillsgate.name[i]<< ":\n";
-                    cout<< "   x: "<< nAreaHillsgate.positionx[i]<< "-"<< nAreaHillsgate.positionx1[i]<< "\n";
-                    cout<< "   y: "<< nAreaHillsgate.positiony[i]<< "-"<< nAreaHillsgate.positiony1[i]<< "\n\n";
+                    cout<< "   x: "<< nAreaHillsgate.positionx[i]<< " to "<< nAreaHillsgate.positionx1[i]<< "\n";
+                    cout<< "   y: "<< nAreaHillsgate.positiony[i]<< " to "<< nAreaHillsgate.positiony1[i]<< "\n\n";
                     wait();
                 }
             } else if (currentLocation== "Celestial")
@@ -4620,8 +4628,8 @@ void travel(){
                 for (size_t i = 0; i < nAreaCelestial.name.size(); i++)
                 {
                     cout<< nAreaCelestial.name[i]<< ":\n";
-                    cout<< "   x: "<< nAreaCelestial.positionx[i]<< "-"<< nAreaCelestial.positionx1[i]<< "\n";
-                    cout<< "   y: "<< nAreaCelestial.positiony[i]<< "-"<< nAreaCelestial.positiony1[i]<< "\n\n";
+                    cout<< "   x: "<< nAreaCelestial.positionx[i]<< " to "<< nAreaCelestial.positionx1[i]<< "\n";
+                    cout<< "   y: "<< nAreaCelestial.positiony[i]<< " to "<< nAreaCelestial.positiony1[i]<< "\n\n";
                     wait();
                 }
             }
@@ -4845,7 +4853,8 @@ void travel(){
                     int roll= rand()% 30+ 1;
 
                     cout<< "You've successfully stole "<< roll<< " amount of gold from the shop owner!\n\n";
-
+                    
+                    player.stats.gold+= roll;
                     player.stats.trust-= 10;
                     cout<< "Trust -10\n\n";
                 } else{
@@ -4959,6 +4968,7 @@ void travel(){
 
                     cout<< "You've successfully stole "<< roll<< " amount of gold from a civilian!\n\n";
 
+                    player.stats.gold+= roll;
                     player.stats.trust--;
                     cout<< "Trust -1\n\n";
                 } else {
@@ -5313,6 +5323,7 @@ void travel(){
 
                     cout<< "You've successfully stole "<< roll<< " amount of gold from the shop owner!\n\n";
 
+                    player.stats.gold+= roll;
                     player.stats.trust-= 10;
                     cout<< "Trust -10\n\n";
                 } else{
