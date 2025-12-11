@@ -1001,8 +1001,24 @@ void shop(){
         cout<<"********** SHOP **********\n";
         cout<<"**************************\n\n";
         cout<< "Gold: "<< player.stats.gold<< "\n\n";
-        cout<< "1. Health Potion ("<< HEALTH_POTION_PRICE<< " gold) ["<< player.inventory.potionHealth<< "]\n";
-        cout<< "2. Mana Potion ("<< MANA_POTION_PRICE<< " gold) ["<< player.inventory.potionMana<< "]\n";
+        if (player.stats.trust>= 100)
+        {
+            cout<< "Trust Discount= 50%\n\n";
+        }
+
+        int discountHealthPotion= discount(HEALTH_POTION_PRICE);
+        int discountManaPotion= discount(MANA_POTION_PRICE); 
+
+        cout<< "1. Health Potion ("<< discountHealthPotion<< " gold)";
+        if(player.stats.trust>= 100){
+            cout<< " was ("<< HEALTH_POTION_PRICE<< ") [";
+        }
+        cout<< player.inventory.potionHealth<< "]\n";
+        cout<< "2. Mana Potion ("<< discountManaPotion<< " gold)";
+        if(player.stats.trust>= 100){
+            cout<< " was ("<< MANA_POTION_PRICE<< ") [";
+        }
+        cout<< player.inventory.potionMana<< "]\n";
         cout<< "3. Weapons ["<< player.getWeaponName(player.inventory, w)<< "]\n";
         cout<< "4. Armor ["<< player.getArmorName(player.inventory, a)<< "]\n";
         cout<< "5. Talismans ["<< player.getTalismanName(player.inventory, t)<< "/"<< player.getTalisman1Name(player.inventory, t)<< "]\n";
@@ -1022,7 +1038,7 @@ void shop(){
             inShop= false;
         } else if (shopInput== 1)
         {
-            if (player.stats.gold>= HEALTH_POTION_PRICE)
+            if (player.stats.gold>= discountHealthPotion)
             {
                 cout<< "Are you sure?\n1. Confirm\n0. Cancel\n";
                 if (!(cin>> confirmHealth))
@@ -1032,7 +1048,7 @@ void shop(){
                 cout<< "\n";
                 if (confirmHealth== 1)
                 {
-                    player.stats.gold-= HEALTH_POTION_PRICE;
+                    player.stats.gold-= discountHealthPotion;
                     player.inventory.potionHealth++;
                     cout<< "Thanks for purchasing!\n";
                     wait();
@@ -1043,7 +1059,7 @@ void shop(){
             }
         } else if (shopInput== 2)
         {
-            if (player.stats.gold>= MANA_POTION_PRICE)
+            if (player.stats.gold>= discountManaPotion)
             {
                 cout<< "Are you sure?\n1. Confirm\n0. Cancel\n";
                 if (!(cin>> confirmMana))
@@ -1053,7 +1069,7 @@ void shop(){
                 cout<< "\n";
                 if (confirmMana== 1)
                 {
-                    player.stats.gold-= MANA_POTION_PRICE;
+                    player.stats.gold-= discountManaPotion;
                     player.inventory.potionMana++;
                     cout<< "Thanks for purchasing!\n";
                     wait();
@@ -1069,10 +1085,16 @@ void shop(){
 
             for (size_t i = 1; i < w.weaponList.size(); i++)
             {
+                int discountWeapon= discount(w.WEAPON_PRICE[i]);
                 int menuNumber= i;
                 bool isEquipped= (static_cast<size_t>(player.inventory.weapon)== i);
 
-                cout<< menuNumber<< ". "<< w.weaponList[i]<< ", DMG: "<< w.weaponDMG[i]<< "\nPrice: "<< w.WEAPON_PRICE[i]<< " gold.\n\n";
+                cout<< menuNumber<< ". "<< w.weaponList[i]<< ", DMG: "<< w.weaponDMG[i]<< "\nPrice: "<< discountWeapon<< " gold.";
+                if (player.stats.trust>= 100)
+                {
+                    cout<< " was ["<< w.WEAPON_PRICE[i]<< "]";
+                }
+                cout<< "\n\n";
                 waitms(100);
                 
                 if (isEquipped) cout<< " [EQUIPPED]\n";
@@ -1088,6 +1110,7 @@ void shop(){
             if (inputWeapon>= 1&& static_cast<size_t>(inputWeapon)< w.weaponList.size())
             {
                 int weaponIndex= inputWeapon;
+                int discountWeapon= discount(w.WEAPON_PRICE[weaponIndex]);
                 if (weaponIndex<= 0|| static_cast<size_t>(weaponIndex)>= w.weaponList.size())
                 {
                     cout<< "Invalid weapon selection!\n\n";
@@ -1098,7 +1121,7 @@ void shop(){
                 {
                     cout<< "You've equipped "<< w.weaponList[weaponIndex]<< "already!\n\n";
                     wait();
-                } else if (player.stats.gold< w.WEAPON_PRICE[weaponIndex])
+                } else if (player.stats.gold< discountWeapon)
                 {
                     cout<< "Not enough gold!\n\n";
                     wait();
@@ -1111,7 +1134,7 @@ void shop(){
                     cout<< "\n";
                     if (confirmWeapon== 1)
                     {
-                        player.stats.gold-= w.WEAPON_PRICE[weaponIndex];
+                        player.stats.gold-= discountWeapon;
                         player.inventory.weapon= weaponIndex;
                         cout<< "Thanks for purchasing!\n";
                         wait();
@@ -1128,10 +1151,16 @@ void shop(){
 
             for (size_t i = 1; i < a.armorList.size(); i++)
             {
+                int discountArmor= discount(a.ARMOR_PRICE[i]);
                 int menuNumber1= i;
                 bool isEquipped1= (static_cast<size_t>(player.inventory.armor)== i);
 
-                cout<< menuNumber1<< ". "<< a.armorList[i]<< "\nHP: "<< a.armorHP[i]<< ", DEF: "<< a.armorDefence[i]<< "\nPrice: "<< a.ARMOR_PRICE[i]<< " gold.\n\n";
+                cout<< menuNumber1<< ". "<< a.armorList[i]<< "\nHP: "<< a.armorHP[i]<< ", DEF: "<< a.armorDefence[i]<< "\nPrice: "<< discountArmor<< " gold.";
+                if (player.stats.trust>= 100)
+                {
+                    cout<< " was ["<< a.ARMOR_PRICE[i]<< "]";
+                }
+                cout<< "\n\n";
                 waitms(100);
                 
                 if (isEquipped1) cout<< " [EQUIPPED]\n\n\n";
@@ -1147,6 +1176,7 @@ void shop(){
             if (inputArmor>= 1&& static_cast<size_t>(inputArmor)< a.armorList.size())
             {
                 int armorIndex= inputArmor;
+                int discountArmor= discount(a.ARMOR_PRICE[armorIndex]);
                 if (armorIndex<= 0|| static_cast<size_t>(armorIndex)>= a.armorList.size())
                 {
                     cout<< "Invalid armmor selection!\n\n";
@@ -1157,7 +1187,7 @@ void shop(){
                 {
                     cout<< "You've equipped "<< a.armorList[armorIndex]<< "already!\n\n";
                     wait();
-                } else if (player.stats.gold< a.ARMOR_PRICE[armorIndex])
+                } else if (player.stats.gold< discountArmor)
                 {
                     cout<< "Not enough gold!\n\n";
                     wait();
@@ -1170,7 +1200,7 @@ void shop(){
                     cout<< "\n";
                     if (confirmArmor== 1)
                     {
-                        player.stats.gold-= a.ARMOR_PRICE[armorIndex];
+                        player.stats.gold-= discountArmor;
                         player.inventory.armor= armorIndex;
                         cout<< "Thanks for purchasing!\n";
                         wait();
@@ -1189,6 +1219,7 @@ void shop(){
             for (size_t j = 1; j < t.talismanList.size(); j++)
             {
                 int menuNumber2= j;
+                int discountTalisman= discount(t.TALISMAN_PRICE[j]);
                 bool isEquipped2= (static_cast<size_t>(player.inventory.talisman)== j);
                 bool isEquipped3= (static_cast<size_t>(player.inventory.talisman1)== j);
 
@@ -1226,7 +1257,9 @@ void shop(){
                 }
                 if (!hasStats) cout<< "No stats";
                 
-                cout<< "\nPrice: "<< t.TALISMAN_PRICE[j]<< " gold.\n\n";
+                cout<< "\nPrice: "<< discountTalisman<< " gold.";
+                cout<< " was ["<< t.TALISMAN_PRICE[j]<< "]";
+                cout<< "\n\n";
 
                 if (isEquipped2|| isEquipped3) cout<< " [EQUIPPED]\n";
                 waitms(100);
@@ -1244,12 +1277,13 @@ void shop(){
             } else if (inputTalisman>= 1&& static_cast<size_t>(inputTalisman)< t.talismanList.size())
             {
                 int talismanIndex= inputTalisman;
+                int discountTalisman= discount(t.TALISMAN_PRICE[talismanIndex]);
                 
                 if (player.inventory.talisman== talismanIndex|| player.inventory.talisman1== talismanIndex)
                 {
                     cout<< "You've owned "<< t.talismanList[talismanIndex]<< " already!\n\n";
                     wait();
-                } else if (player.stats.gold< t.TALISMAN_PRICE[talismanIndex])
+                } else if (player.stats.gold< discountTalisman)
                 {
                     cout<< "Not enough gold!\n\n";
                 } else{
@@ -1281,7 +1315,7 @@ void shop(){
                             wait();
                         }
                         
-                        player.stats.gold-= t.TALISMAN_PRICE[talismanIndex];
+                        player.stats.gold-= discountTalisman;
                         cout<< "Thanks for purchasing!\n\n";
 
                         player.talismanAttributes(player.inventory, t);
@@ -5957,8 +5991,6 @@ int main(){
 
                     player.talismanAttributes(player.inventory, player.talisman);
                     player.skill = player.createPlayerSkill();
-
-                    player.checkStats();
 
                     gameInitialized = true;
                 } else{
