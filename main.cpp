@@ -74,6 +74,7 @@ class Player{
     int x= 0;
     int y= 0;
     int distanceLastTraveled= 0;
+    int storymid= 1;
 
     struct Stats
     {
@@ -840,6 +841,19 @@ void storyIntro(){
     const string story8= "Why you seek revenge is unknown.\n"; printTypewriter(story8); wait(2);
     const string story9= "But you are determined to reclaim your identity...\n"; printTypewriter(story9); wait();
     const string story10= "and make someone pay.\n\n"; printTypewriter(story10); wait(2);
+}
+
+void storyMid(){
+    const string story= "Suddenly,"; printTypewriter(story); wait();
+    const string story1= " you felt an instinct,"; printTypewriter(story1); wait();
+    const string story2= " a thought.\n"; printTypewriter(story2); wait(2);
+    const string story3= "A mysterious voice in your head "; printTypewriter(story3); wait();
+    const string story4= "that tells you.\n"; printTypewriter(story4); wait(2);
+    const string story5= "'I await your presence,"; printTypewriter(story5); wait();
+    const string story6= " far away of these land'"; printTypewriter(story6); wait();
+    const string storydot= "."; printTypewriter(storydot); wait(); 
+    const string storydot1= "."; printTypewriter(storydot1); wait(); 
+    const string storydot2= ".\n\n"; printTypewriter(storydot); wait(); 
 }
 
 void cinClear(){
@@ -4229,6 +4243,12 @@ void travel(){
 
         levelUp();
 
+        if (player.storymid> 0&& player.stats.trust>= 100)
+        {
+            player.storymid--;
+            storyMid();   
+        }
+
         inFarm= false;
         inMarket= false;
         inTown= false;
@@ -5830,6 +5850,7 @@ void saveGame(int slot){
 
     outFile<< player.x<< " "<< player.y<< "\n";
     outFile<< player.distanceLastTraveled<< "\n";
+    outFile<< player.storymid<< "\n";
 
     outFile<< player.inventory.weapon<< " "<< player.inventory.armor<< " "<< player.inventory.talisman<< " "<< player.inventory.talisman1<< "\n";
     outFile<< player.inventory.potionHealth<< " "<< player.inventory.potionMana<< "\n";
@@ -5891,6 +5912,7 @@ bool loadGame(int slot){
 
     inFile >> player.x >> player.y;
     inFile>> player.distanceLastTraveled;
+    inFile>> player.storymid;
 
     inFile >> player.inventory.weapon >> player.inventory.armor >> player.inventory.talisman >> player.inventory.talisman1;
     inFile >> player.inventory.potionHealth >> player.inventory.potionMana;
