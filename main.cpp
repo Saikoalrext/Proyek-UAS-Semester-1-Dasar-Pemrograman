@@ -990,7 +990,7 @@ void shop(){
     Player::Talisman t= player.createTalisman();
 
     auto discount= [&](int basePrice) -> int {
-        if (player.stats.trust>= 100)
+        if (player.stats.trust>= 500)
         {
             return basePrice/ 2;
         }
@@ -1015,7 +1015,7 @@ void shop(){
         cout<<"********** SHOP **********\n";
         cout<<"**************************\n\n";
         cout<< "Gold: "<< player.stats.gold<< "\n\n";
-        if (player.stats.trust>= 100)
+        if (player.stats.trust>= 500)
         {
             cout<< "Trust Discount= 50%\n\n";
         }
@@ -1024,12 +1024,12 @@ void shop(){
         int discountManaPotion= discount(MANA_POTION_PRICE); 
 
         cout<< "1. Health Potion ("<< discountHealthPotion<< " gold)";
-        if(player.stats.trust>= 100){
+        if(player.stats.trust>= 500){
             cout<< " was ("<< HEALTH_POTION_PRICE<< ") [";
         }
         cout<< player.inventory.potionHealth<< "]\n";
         cout<< "2. Mana Potion ("<< discountManaPotion<< " gold)";
-        if(player.stats.trust>= 100){
+        if(player.stats.trust>= 500){
             cout<< " was ("<< MANA_POTION_PRICE<< ") [";
         }
         cout<< player.inventory.potionMana<< "]\n";
@@ -1104,7 +1104,7 @@ void shop(){
                 bool isEquipped= (static_cast<size_t>(player.inventory.weapon)== i);
 
                 cout<< menuNumber<< ". "<< w.weaponList[i]<< ", DMG: "<< w.weaponDMG[i]<< "\nPrice: "<< discountWeapon<< " gold.";
-                if (player.stats.trust>= 100)
+                if (player.stats.trust>= 500)
                 {
                     cout<< " was ["<< w.WEAPON_PRICE[i]<< "]";
                 }
@@ -1170,7 +1170,7 @@ void shop(){
                 bool isEquipped1= (static_cast<size_t>(player.inventory.armor)== i);
 
                 cout<< menuNumber1<< ". "<< a.armorList[i]<< "\nHP: "<< a.armorHP[i]<< ", DEF: "<< a.armorDefence[i]<< "\nPrice: "<< discountArmor<< " gold.";
-                if (player.stats.trust>= 100)
+                if (player.stats.trust>= 500)
                 {
                     cout<< " was ["<< a.ARMOR_PRICE[i]<< "]";
                 }
@@ -4237,7 +4237,7 @@ void travel(){
     int inTownInput;
     int inCapitalInput;
 
-    if (!player.isStoryMidTriggered&& player.stats.trust>= 100)
+    if (!player.isStoryMidTriggered&& player.stats.trust>= 300)
     {
         player.isStoryMidTriggered= true;
         storyMid();   
@@ -4714,25 +4714,49 @@ void travel(){
                 cout<< ".\n\n";
                 wait();
 
-                if (rand()% 100< 30)
+                bool isProtected= false;
+                int roll= rand()% 100;
+                
+                if (roll< 30)
                 {
                     if (rand()% 2== 1)
                     {
                         battleThief();
                         if (player.stats.HP<= 0) return;
+                        if (enemies.stats.HP> 0)
+                        {
+                            cout<< "You abandoned the farm!\n\n";
+                            wait();
+                            player.stats.trust-= 10;
+                            cout<< "Trust -10\n\n";
+                        } else if (enemies.stats.HP<= 0) isProtected= true;
+                        
                     } else{
                         battleBandit();
                         if (player.stats.HP<= 0) return;
+                        if (enemies.stats.HP> 0)
+                        {
+                            cout<< "You abandoned the farm!\n\n";
+                            wait();
+                            player.stats.trust-= 10;
+                            cout<< "Trust -10\n\n";
+                        } else if (enemies.stats.HP<= 0) isProtected= true;
                     }
                     wait(2);
+                } else{
+                    isProtected= true;
                 }
 
                 if (player.stats.HP<= 0) return;
-                cout<< "You've successfully protected the farm for an hour!\n\n";
-                wait();
-                player.stats.XP+= 20;
-                cout<< "XP +20\n\n";
-                wait();
+                if(isProtected== true){
+                    cout<< "You've successfully protected the farm for an hour!\n\n";
+                    wait();
+                    player.stats.XP+= 20;
+                    player.stats.trust+= 20;
+                    cout<< "XP +20\n";
+                    cout<< "Trust gained: +20\n\n";
+                    wait();
+                }
                 if (rand()% 2== 1)
                 {
                     int roll= max(1, rand()% 31);
@@ -4825,6 +4849,7 @@ void travel(){
                     wait(2);                 
                 } else if (helpShopInput== 2)
                 {
+                    
                     cout<< "Guarding the shop";
                     for (int i = 0; i < 3; i++)
                     {
@@ -4832,8 +4857,9 @@ void travel(){
                         wait();
                     }
                     cout<< "\n\n";
-
+                    
                     int roll= rand()%100;
+                    bool isGuarded= false;
 
                     if (roll< 30)
                     {
@@ -4847,16 +4873,7 @@ void travel(){
                                 wait();
                                 player.stats.trust-= 10;
                                 cout<< "Trust -10\n\n";
-                            }
-                            if (enemies.stats.HP<= 0)
-                            {
-                                cout<< "You've successfully guarded the shop for an hour!\n\n";
-                                wait();
-
-                                player.stats.XP+= 20;
-                                cout<< "XP +20\n\n";
-                                wait();
-                            }
+                            } else if (enemies.stats.HP<= 0) isGuarded= true;
                         } else{
                             battleBandit();
                             if (player.stats.HP<= 0) return;
@@ -4866,25 +4883,27 @@ void travel(){
                                 wait();
                                 player.stats.trust-= 10;
                                 cout<< "Trust -10\n\n";
-                            }
+                            } else if (enemies.stats.HP<= 0) isGuarded= true;
                         }
+                        wait(2);
+                    } else{
+                        isGuarded= true;
                     }
                     
                     if (player.stats.HP<= 0) return;
 
-                    if (roll>= 30)
-                    {
-                        cout<< "You've successfully guarded the shop for an hour!\n\n";
-                        wait();
-
-                        player.stats.XP+= 20;
-                        cout<< "XP +20\n\n";
-                        wait();
-                    }
-                                
+                    if(isGuarded== true){
+                    cout<< "You've successfully guarded the shop for an hour!\n\n";
+                    wait();
+                    player.stats.XP+= 20;
+                    player.stats.trust+= 20;
+                    cout<< "XP +20\n";
+                    cout<< "Trust gained: +20\n\n";
+                    wait();
+                }          
                     if (rand()% 2== 1)
                     {
-                        int roll= max(1, rand()% 31);
+                        int roll= max(1, rand()% 51);
                         cout<< "You've received "<< roll<< " amount of gold from the shop owner in return!\n\n";
                         wait();
                         player.stats.gold+= roll;
@@ -5786,7 +5805,7 @@ void travel(){
 }
 
 void checkCoordinates(){
-    cout<< "************************\nx= "<< player.x<< "   y= "<< player.y<< "\n************************\n\n"; wait(2);
+    cout<< "************************\nx= "<< player.x<< "                y= "<< player.y<< "\n************************\n\n"; wait(2);
 }
 
 void listSaveSlots(){
