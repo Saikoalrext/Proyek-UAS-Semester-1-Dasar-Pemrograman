@@ -5261,7 +5261,7 @@ void travel(){
                     cout<< "XP +30\n\n";
                     wait();
                     player.stats.trust-= 30;
-                    cout<< "Trust gained: -20\n\n";
+                    cout<< "Trust gained: -30\n\n";
                     wait();
                     
                     int roll= rand()% 3;
@@ -5663,7 +5663,7 @@ void travel(){
                     cout<< "XP +30\n\n";
                     wait();
                     player.stats.trust-= 30;
-                    cout<< "Trust gained: -20\n\n";
+                    cout<< "Trust gained: -30\n\n";
                     wait();
                     
                     int roll= rand()% 3;
