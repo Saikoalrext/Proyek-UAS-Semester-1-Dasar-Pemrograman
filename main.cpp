@@ -966,10 +966,10 @@ void scaleByNation(int nationScaliing){
 
     float rewardMultiplier= 1.0f+ (nationScaliing)* NATION_REWARD_SCALING;
 
-    enemies.stats.XP= enemies.stats.XP* statMultiplier;
-    enemies.stats.gold= enemies.stats.gold* statMultiplier;
-    bosses.stats.XP= bosses.stats.XP* statMultiplier;
-    bosses.stats.gold= bosses.stats.gold* statMultiplier;
+    enemies.stats.XP= enemies.stats.XP* rewardMultiplier;
+    enemies.stats.gold= enemies.stats.gold* rewardMultiplier;
+    bosses.stats.XP= bosses.stats.XP* rewardMultiplier;
+    bosses.stats.gold= bosses.stats.gold* rewardMultiplier;
 
     enemies.stats.HP= max(1.0f, enemies.stats.HP);
     enemies.stats.maxHP= max(1.0f, enemies.stats.maxHP);
