@@ -1026,16 +1026,16 @@ void shop(){
         int discountHealthPotion= discount(HEALTH_POTION_PRICE);
         int discountManaPotion= discount(MANA_POTION_PRICE); 
 
-        cout<< "1. Health Potion ("<< discountHealthPotion<< " gold)";
+        cout<< "1. Health Potion ("<< discountHealthPotion<< " gold) ";
         if(player.stats.trust>= 500){
-            cout<< " was ("<< HEALTH_POTION_PRICE<< ") [";
+            cout<< " was ("<< HEALTH_POTION_PRICE<< ")";
         }
-        cout<< player.inventory.potionHealth<< "]\n";
-        cout<< "2. Mana Potion ("<< discountManaPotion<< " gold)";
+        cout<< "["<< player.inventory.potionHealth<< "]\n";
+        cout<< "2. Mana Potion ("<< discountManaPotion<< " gold) ";
         if(player.stats.trust>= 500){
-            cout<< " was ("<< MANA_POTION_PRICE<< ") [";
+            cout<< " was ("<< MANA_POTION_PRICE<< ")";
         }
-        cout<< player.inventory.potionMana<< "]\n";
+        cout<< "["<< player.inventory.potionMana<< "]\n";
         cout<< "3. Weapons ["<< player.getWeaponName(player.inventory, w)<< "]\n";
         cout<< "4. Armor ["<< player.getArmorName(player.inventory, a)<< "]\n";
         cout<< "5. Talismans ["<< player.getTalismanName(player.inventory, t)<< "/"<< player.getTalisman1Name(player.inventory, t)<< "]\n";
@@ -1666,10 +1666,10 @@ void battle(){
             break;
         }
 
-        if (enemies.stats.HP> 0&& enemies.stats.HP<= enemies.stats.maxHP* FLEE_HP_PERCENTAGE/ 100)
+        if (enemies.stats.HP> 0&& enemies.stats.HP<= enemies.stats.maxHP* FLEE_HP_PERCENTAGE_CIVILIAN/ 100)
         {
             int roll= rand()% 100;
-            if (roll< FLEE_CHANCE)
+            if (roll< FLEE_CHANCE_CIVILIAN)
             {
                 cout<< enemies.stats.name<< " fled.\n";
                 wait(2);
@@ -4889,7 +4889,7 @@ void travel(){
                                 cout<< "Trust -10\n\n";
                             } else if (enemies.stats.HP> 0&& enemies.stats.fled== true)
                             {
-                                cout<< "You managed to kick out the thief\n\n";
+                                cout<< "You managed to kick out the intruder\n\n";
                                 wait();
                                 player.stats.trust+= 20;
                                 cout<< "Trust +20\n\n";
