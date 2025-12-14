@@ -364,6 +364,7 @@ class Enemies{
         int critChance;
         int XP;
         int gold;
+        bool fled;
     };
     Stats createEnemyVillager(){
         Stats e;
@@ -506,6 +507,7 @@ class Enemies{
         e10.critChance= 2;
         e10.XP= 25;
         e10.gold= 20;
+        e10.fled= false;
         return e10;
     }
     Stats createEnemyBandit(){
@@ -519,6 +521,7 @@ class Enemies{
         e11.critChance= 2;
         e11.XP= 20;
         e11.gold= 20;
+        e11.fled= false;
         return e11;
     }
 
@@ -2025,6 +2028,7 @@ void wildernessBattle(){
             if (roll< FLEE_CHANCE)
             {
                 cout<< enemies.stats.name<< " fled.\n";
+                enemies.stats.fled= true;
                 wait(2);
                 return;
             }
@@ -4877,13 +4881,22 @@ void travel(){
                         } else{
                             battleBandit();
                             if (player.stats.HP<= 0) return;
-                            if (enemies.stats.HP> 0)
+                            if (enemies.stats.HP> 0&& enemies.stats.fled== false)
                             {
                                 cout<< "You abandoned the shop owner!\n\n";
                                 wait();
                                 player.stats.trust-= 10;
                                 cout<< "Trust -10\n\n";
-                            } else if (enemies.stats.HP<= 0) isGuarded= true;
+                            } else if (enemies.stats.HP> 0&& enemies.stats.fled== true)
+                            {
+                                cout<< "You managed to kick out the thief\n\n";
+                                wait();
+                                player.stats.trust+= 20;
+                                cout<< "Trust +20\n\n";
+                                isGuarded= true;
+                            }
+                             
+                            else if (enemies.stats.HP<= 0) isGuarded= true;
                         }
                         wait(2);
                     } else{
@@ -4900,14 +4913,14 @@ void travel(){
                     cout<< "XP +20\n";
                     cout<< "Trust gained: +20\n\n";
                     wait();
-                }          
-                    if (rand()% 2== 1)
-                    {
-                        int roll= max(1, rand()% 51);
-                        cout<< "You've received "<< roll<< " amount of gold from the shop owner in return!\n\n";
-                        wait();
-                        player.stats.gold+= roll;
-                    }
+                        if (rand()% 2== 1)
+                        {
+                            int roll= max(1, rand()% 51);
+                            cout<< "You've received "<< roll<< " amount of gold from the shop owner in return!\n\n";
+                            wait();
+                            player.stats.gold+= roll;
+                        }
+                    }          
                 } else{
                     return;
                 }
