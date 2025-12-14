@@ -293,7 +293,7 @@ class Player{
         cout << "Weapon: " << getWeaponName(inventory, weapon) << " +" << weaponDamage << " DMG\n";
         cout<< "STR: "<< stats.STR<< "\n";
         cout<< "DEF: "<< stats.DEF<< "\n";
-        float effectiveCritDMG= (stats.critBuffTurns> 0)? stats.critDMG* 2: stats.critDMG;
+        float effectiveCritDMG= (stats.critBuffTurns> 0)? stats.critDMG* 1.2f: stats.critDMG;
         cout<< "Crit Damage: "<< effectiveCritDMG<< "\n";
         float effectiveCritChance= (stats.critChanceBuffTurns> 0)? stats.critChance* 2: stats.critChance;
         cout<< "Crit Chance: "<< effectiveCritChance<< "%\n";
@@ -1564,7 +1564,7 @@ void battle(){
                     player.stats.critBuffTurns+= 2;
                     player.stats.MP-= player.skill.skill1MPCost;
 
-                    cout<< "You used Focus Strike! Critical Damage is doubled for 2 turns!\n\n";
+                    cout<< "You used Focus Strike! Critical Damage is buffed for 2 turns!\n\n";
                     wait(2);
                     extraAction= true;
                     continue;
@@ -1914,7 +1914,7 @@ void wildernessBattle(){
                     player.stats.critBuffTurns+= 2;
                     player.stats.MP-= player.skill.skill1MPCost;
 
-                    cout<< "You used Focus Strike! Critical Damage is doubled for 2 turns!\n\n";
+                    cout<< "You used Focus Strike! Critical Damage is buffed for 2 turns!\n\n";
                     wait(2);
                     extraAction= true;
                     continue;
@@ -2406,7 +2406,7 @@ void bossBattleDragon(){
                     player.stats.critBuffTurns+= 2;
                     player.stats.MP-= player.skill.skill1MPCost;
 
-                    cout<< "You used Focus Strike! Critical Damage is doubled for 2 turns!\n\n";
+                    cout<< "You used Focus Strike! Critical Damage is buffed for 2 turns!\n\n";
                     wait(2);
                     extraAction= true;
                     continue;
@@ -2799,7 +2799,7 @@ void bossBattleKingGrayhaven(){
                     player.stats.critBuffTurns+= 2;
                     player.stats.MP-= player.skill.skill1MPCost;
 
-                    cout<< "You used Focus Strike! Critical Damage is doubled for 2 turns!\n\n";
+                    cout<< "You used Focus Strike! Critical Damage is buffed for 2 turns!\n\n";
                     wait(2);
                     extraAction= true;
                     continue;
