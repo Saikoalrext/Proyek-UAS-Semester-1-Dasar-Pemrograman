@@ -4547,9 +4547,11 @@ void travel(){
                     if (rand()% 2== 1)
                     {
                         battleThief();
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else{
                         battleBandit();
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -4591,9 +4593,11 @@ void travel(){
                     if (rand()% 2== 1)
                     {
                         battleThief();
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else{
                         battleBandit();
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
