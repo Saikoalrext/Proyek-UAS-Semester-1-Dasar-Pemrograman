@@ -4772,6 +4772,9 @@ void travel(){
             {
                 cout<< "You burned down some part of the farm, causing chaos!\n\n";
                 wait();
+                player.stats.trust-= 39;
+                cout<< "Trust -39\n\n";
+                wait();
                 int roll= rand()% 100;
                 if (roll< 50)
                 {
@@ -4779,6 +4782,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleFarmer(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleFarmer(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleFarmer(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 } else if (roll< 80)
                 {  
@@ -4786,12 +4790,14 @@ void travel(){
                     if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 } else{
                     if (currentLocation== "Grayhaven") battleGuard(nAreaGrayhaven.scaling);
                     if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
             } else{
@@ -4878,6 +4884,7 @@ void travel(){
                                 player.stats.trust-= 10;
                                 cout<< "Trust -10\n\n";
                             } else if (enemies.stats.HP<= 0) isGuarded= true;
+                            player.distanceLastTraveled+= 100;
                         } else{
                             battleBandit();
                             if (player.stats.HP<= 0) return;
@@ -4895,12 +4902,13 @@ void travel(){
                                 cout<< "Trust +20\n\n";
                                 isGuarded= true;
                             }
-                             
                             else if (enemies.stats.HP<= 0) isGuarded= true;
+                            player.distanceLastTraveled+= 100;
                         }
                         wait(2);
                     } else{
                         isGuarded= true;
+                        player.distanceLastTraveled+= 100;
                     }
                     
                     if (player.stats.HP<= 0) return;
@@ -4950,12 +4958,14 @@ void travel(){
                         if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else{
                         if (currentLocation== "Grayhaven") battleGuard(nAreaGrayhaven.scaling);
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -4981,6 +4991,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 } else if (startAFight== 2)
                 {
@@ -4991,6 +5002,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 } else if (startAFight== 3)
                 {
@@ -5001,11 +5013,13 @@ void travel(){
                     if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                     if (currentLocation== "Grayhaven") battleGuard(nAreaGrayhaven.scaling);
                     if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 } else if (startAFight== 0)
                 {
@@ -5066,6 +5080,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else if (roll< 85)
                     {
@@ -5073,18 +5088,21 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
-                        if (player.stats.HP<= 0) return;
+                        player.distanceLastTraveled+= 100;
+                        if (player.stats.HP<= 0) return; 
                     } else if (roll< 95)
                     {
                         if (currentLocation== "Grayhaven") battleGuardDog(nAreaGrayhaven.scaling);
                         if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                         if (currentLocation== "Grayhaven") battleGuard(nAreaGrayhaven.scaling);
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else if (roll< 99)
                     {
@@ -5092,6 +5110,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else if (roll< 100)
                     {
@@ -5099,6 +5118,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5122,6 +5142,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 
@@ -5132,6 +5153,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 
@@ -5142,6 +5164,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 
@@ -5152,6 +5175,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 
@@ -5162,6 +5186,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 } 
                 else if(startAFight== 0){
@@ -5208,6 +5233,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 1)
@@ -5221,6 +5247,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 2)
@@ -5234,6 +5261,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 3)
@@ -5247,6 +5275,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 4)
@@ -5260,6 +5289,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             
@@ -5285,6 +5315,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else if (roll== 1)
                     {
@@ -5292,13 +5323,15 @@ void travel(){
                         if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling); 
-                        if (player.stats.HP<= 0) return;                   
+                        player.distanceLastTraveled+= 100;                 
+                        if (player.stats.HP<= 0) return;  
                     }
                     else{
                         if (currentLocation== "Grayhaven") battleKnight(nAreaGrayhaven.scaling);
                         if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5320,6 +5353,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 80)
@@ -5328,6 +5362,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling); 
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 87)
@@ -5336,6 +5371,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 94)
@@ -5344,6 +5380,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleArcherKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleArcherKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleArcherKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else{
@@ -5351,6 +5388,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleMage(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleMage(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleMage(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5420,6 +5458,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 2)
@@ -5428,6 +5467,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling); 
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 3)
@@ -5436,6 +5476,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return; 
                     }
                     else if (roll< 4)
@@ -5444,6 +5485,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling); 
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 5)
@@ -5452,6 +5494,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 6)
@@ -5460,6 +5503,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleArcherKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleArcherKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleArcherKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5492,6 +5536,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 else if (startAFight== 2)
@@ -5502,6 +5547,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 else if (startAFight== 3)
@@ -5512,6 +5558,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 else if (startAFight== 4)
@@ -5522,6 +5569,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 else if (startAFight== 5)
@@ -5532,6 +5580,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 else if (startAFight== 6)
@@ -5542,6 +5591,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleArcherKnight(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleArcherKnight(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleArcherKnight(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
                 else if (startAFight== 7)
@@ -5552,6 +5602,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battleMage(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battleMage(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battleMage(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
 
                     if (rand()%10< 2)
@@ -5560,6 +5611,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGolem(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGolem(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGolem(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5571,6 +5623,7 @@ void travel(){
                     if (currentLocation== "Stormwich") battlePrince(nAreaStormwich.scaling);
                     if (currentLocation== "Hillsgate") battlePrince(nAreaHillsgate.scaling);
                     if (currentLocation== "Celestial") battlePrince(nAreaCelestial.scaling);
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
             } else if (inCapitalInput== 4)
@@ -5610,6 +5663,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleVillager(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleVillager(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleVillager(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 1)
@@ -5623,6 +5677,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 2)
@@ -5636,6 +5691,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleGuardDog(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleGuardDog(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleGuardDog(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 3)
@@ -5649,6 +5705,7 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
                             if (roll1== 4)
@@ -5662,9 +5719,9 @@ void travel(){
                                 if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                                 if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                                 if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                                player.distanceLastTraveled+= 100;
                                 if (player.stats.HP<= 0) return;
                             }
-                            
                     }
                     
                 }
@@ -5687,6 +5744,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     } else if (roll== 1)
                     {
@@ -5694,13 +5752,15 @@ void travel(){
                         if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling); 
-                        if (player.stats.HP<= 0) return;                  
+                        player.distanceLastTraveled+= 100;                
+                        if (player.stats.HP<= 0) return;  
                     }
                     else{
                         if (currentLocation== "Grayhaven") battleKnight(nAreaGrayhaven.scaling);
                         if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling); 
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5722,6 +5782,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleGuard(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleGuard(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleGuard(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else if (roll< 80)
@@ -5730,6 +5791,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleSoldier(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleSoldier(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleSoldier(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return; 
                     }
                     else if (roll< 87)
@@ -5738,6 +5800,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleKnight(nAreaCelestial.scaling);
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return; 
                     }
                     else if (roll< 94)
@@ -5746,6 +5809,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleArcherKnight(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleArcherKnight(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleArcherKnight(nAreaCelestial.scaling); 
+                        player.distanceLastTraveled+= 100;
                         if (player.stats.HP<= 0) return;
                     }
                     else{
@@ -5753,6 +5817,7 @@ void travel(){
                         if (currentLocation== "Stormwich") battleMage(nAreaStormwich.scaling);
                         if (currentLocation== "Hillsgate") battleMage(nAreaHillsgate.scaling);
                         if (currentLocation== "Celestial") battleMage(nAreaCelestial.scaling); 
+                        player.distanceLastTraveled+= 100; 
                         if (player.stats.HP<= 0) return;
                     }
                 }
@@ -5776,6 +5841,7 @@ void travel(){
                     if (bosses.stats.count== 0){
                         return;
                     } else bossBattleKingGrayhaven();
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
 
@@ -5787,6 +5853,7 @@ void travel(){
                     if (bosses.stats.count== 0){
                         return;
                     } else bossBattleKingStormwich();
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
 
@@ -5798,6 +5865,7 @@ void travel(){
                     if (bosses.stats.count== 0){
                         return;
                     } else bossBattleKingHillsgate();
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
 
@@ -5809,6 +5877,7 @@ void travel(){
                     if (bosses.stats.count== 0){
                         return;
                     } else bossBattleKingCelestial();
+                    player.distanceLastTraveled+= 100;
                     if (player.stats.HP<= 0) return;
                 }
             }
