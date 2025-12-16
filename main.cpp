@@ -1275,7 +1275,9 @@ void shop(){
                 if (!hasStats) cout<< "No stats";
                 
                 cout<< "\nPrice: "<< discountTalisman<< " gold.";
+                if (player.stats.trust>= 500){
                 cout<< " was ["<< t.TALISMAN_PRICE[j]<< "]";
+                }
                 cout<< "\n\n";
 
                 if (isEquipped2|| isEquipped3) cout<< " [EQUIPPED]\n";
@@ -1303,6 +1305,7 @@ void shop(){
                 } else if (player.stats.gold< discountTalisman)
                 {
                     cout<< "Not enough gold!\n\n";
+                    wait();
                 } else{
                     cout<< "Are you sure?\n1. Confirm\n0. Cancel\n";
                     if (!(cin>> confirmTalisman))
@@ -4273,7 +4276,7 @@ void travel(){
             }
         }
 
-        if (currentLocation== "Wilderness"&& abs(player.x)> 2000|| abs(player.y)> 2000)
+        if (currentLocation== "Wilderness" && (abs(player.x)> 2000 || abs(player.y)> 2000))
         {
             bosses.stats= bosses.createBossDragon();
             scaleBossByLevel(player.stats.level);
@@ -4776,8 +4779,8 @@ void travel(){
             {
                 cout<< "You burned down some part of the farm, causing chaos!\n\n";
                 wait();
-                player.stats.trust-= 39;
-                cout<< "Trust -39\n\n";
+                player.stats.trust-= 30;
+                cout<< "Trust -30\n\n";
                 wait();
                 int roll= rand()% 100;
                 if (roll< 50)
@@ -5413,7 +5416,7 @@ void travel(){
             cout<< "3. Start a fight\n";
             cout<< "4. Wreak havoc\n";
             cout<< "5. Burn the city\n";
-            if (player.stats.trust< -100)
+            if (player.stats.trust<= -100)
             {
                 cout<< "7. ???\n";
             }
@@ -5835,7 +5838,7 @@ void travel(){
             } else if(inCapitalInput== 6){
                 cout<< "x> |2000|   y> |2000|???\n\n";
 
-            } else if (player.stats.trust< -100&& inCapitalInput== 7)
+            } else if (player.stats.trust<= -100&& inCapitalInput== 7)
             {
                 if (currentLocation== "Grayhaven"&& player.stats.trust<= -100)
                 {
